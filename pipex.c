@@ -29,6 +29,8 @@ int main(int argc, int **argv)
 	 * 			-For each constructed path, use access(full_path, X_OK)
 	 * 				to check if the command exists and is executable
 	 * 		- handle errors
+	 *		- get file/directories names
+	 * 		- get commands
 	 */
 	//get the arguments from position 2 to argv-2 into array
 }
