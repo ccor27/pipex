@@ -6,7 +6,7 @@
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:01:54 by crosorio          #+#    #+#             */
-/*   Updated: 2025/05/22 16:50:56 by crosorio         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:19:54 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,44 +107,3 @@ char	**ft_split(char const *s, char c)
 		return (ft_free_memory(matrix));
 	return (matrix);
 }
-/*
-word = malloc((i - start + (s[i] != c)) + 1);
-			if (!word)
-				return (NULL);
-			ft_memcpy(word, s + start, i - start + (s[i] != c));
-			word[i - start + (s[i] != c)] = '\0';
-*/
-/*
-char	**ft_fill_up_matrix(const char *s, char **matrix, char c, int index)
-{
-	int		start;
-	char	*word;
-	int		i;
-	int		len;
-
-	i = 0;
-	start = -1;
-	while (s[i])
-	{
-		if (s[i] != c && start == -1)
-			start = i;
-		if (start != -1 && (s[i] == c || s[i + 1] == '\0'))
-		{
-			if (s[i] == c)
-				len = i - start;
-			else
-				len = i - start + 1;
-			word = malloc(len + 1);
-			if (!word)
-				return (NULL);
-			ft_memcpy(word, s + start, len);
-			matrix[len] = '\0';
-			matrix[index++] = word;
-			start = -1;
-		}
-		i++;
-	}
-	matrix[index] = NULL;
-	return (matrix);
-}
-*/
