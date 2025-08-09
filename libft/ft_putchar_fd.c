@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/04/16 16:10:03 by crosorio          #+#    #+#             */
+/*   Updated: 2025/04/16 16:11:30 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+void	ft_putchar_fd(char c, int fd)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	write(fd, &c, 1);
 }

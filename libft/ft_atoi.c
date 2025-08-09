@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/04/15 15:01:54 by crosorio          #+#    #+#             */
+/*   Updated: 2025/04/15 15:02:23 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+int	ft_atoi(const char *nptr)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	int	i;
+	int	num;
+	int	sign;
+
+	i = 0;
+	num = 0;
+	sign = 1;
+	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (ft_isdigit(nptr[i]))
+	{
+		num = num * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (num * sign);
 }

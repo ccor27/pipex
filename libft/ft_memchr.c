@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/04/15 15:23:56 by crosorio          #+#    #+#             */
+/*   Updated: 2025/04/15 15:31:24 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	size_t			i;
+	unsigned char	*s_copy;
+
+	i = 0;
+	s_copy = (unsigned char *)s;
+	while (i < n)
+	{
+		if (s_copy[i] == (unsigned char)c)
+			return ((void *)&s_copy[i]);
+		i++;
+	}
+	return (0);
 }

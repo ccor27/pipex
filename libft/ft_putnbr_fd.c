@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/04/16 16:23:58 by crosorio          #+#    #+#             */
+/*   Updated: 2025/04/16 16:30:16 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd((n % 10) + '0', fd);
 }

@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/05/19 16:05:10 by crosorio          #+#    #+#             */
+/*   Updated: 2025/05/19 16:05:11 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+/**
+ * Funtion to validate if a character is a
+ * valid specifier
+ */
+int	ft_is_valid_specifier(char c)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
+		|| c == 'x' || c == 'X' || c == '%');
 }

@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:12:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/08 21:36:07 by crosorio         ###   ########.fr       */
+/*   Created: 2025/04/15 09:36:46 by crosorio          #+#    #+#             */
+/*   Updated: 2025/04/16 12:46:39 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main(int argc, int **argv)
+char	*ft_strrchr(const char *s, int c)
 {
-	if(argc < 5)
-		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	
+	size_t	s_lenght;
+
+	s_lenght = ft_strlen(s);
+	if ((unsigned char)c == '\0')
+		return ((char *)&s[s_lenght]);
+	while (s_lenght--)
+	{
+		if (s[s_lenght] == (unsigned char)c)
+			return ((char *)&s[s_lenght]);
+	}
+	return (0);
 }
