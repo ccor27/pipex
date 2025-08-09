@@ -12,11 +12,16 @@
 
 #include "pipex.h"
 
-int main(int argc, int **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	if(argc < 5)
+	t_data data;
+
+	if (argc < 5)
 		exit(EXIT_FAILURE);
-	if(!ft_are_arguments_valid(argv))
+	if (!ft_are_arguments_valid(argv))
 		exit(EXIT_FAILURE);
-	
+	ft_store_commands(argc, argv, &data);
+	ft_store_filenames(argc, argv, &data);
+	ft_validate_commands(&data,envp);
+	ft_printf("arguments are valid\n");
 }

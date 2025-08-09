@@ -32,44 +32,49 @@ int	ft_is_string_empty_or_blank(char *s)
  * Functionn to validate if the arguments are
  * empty or blanks strings
  */
-int ft_are_arguments_valid(char **arguments)
+int	ft_are_arguments_valid(char **arguments)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (arguments[i])
 	{
-		if(ft_is_string_empty_or_blank(arguments[i]))
-			return(0);
+		if (ft_is_string_empty_or_blank(arguments[i]))
+			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
-
-/**
- * To the matrix of the function of belong...
- * just make sure:
-
-    matrix has been allocated with at least (arg_size - 3 + 1) elements.
-
-    You handle potential memory allocation failures from ft_split() later.
- */
 
 /**
  * Function to store the commands into an matrix
  */
-void	ft_store_commands(int arg_size, char **arguments, char **matrix)
+void	ft_store_commands(int arg_size, char **arguments, t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
+	data->commands = malloc(sizeof(char **) * (arg_size - 2));
+	if (!data->commands)
+		exit(EXIT_FAILURE);
 	i = 2;
 	j = 0;
 	while (i < arg_size - 1)
 	{
-		matrix[j]=ft_split(arguments[i],' ');
+		data->commands[j] = ft_split(arguments[i], ' ');
 		i++;
 		j++;
 	}
-	matrix[j] = NULL;
+	data->commands[j] = NULL;
+}
+/**
+ * Function to store the filenames into a char array
+ */
+void	ft_store_filenames(int arg_size, char **arguments, t_data *data)
+{
+	data->filenames = malloc(sizeof(char *)*(3));
+	if(!data->filenames)
+		exit(EXIT_FAILURE);
+	data->filenames[0] = ft_strdup(arguments[1]);
+	data->filenames[1] = ft_strdup(arguments[arg_size - 1]);
 }
