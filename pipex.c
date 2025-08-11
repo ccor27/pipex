@@ -12,6 +12,7 @@
 
 #include "pipex.h"
 
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
@@ -20,8 +21,13 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	if (!ft_are_arguments_valid(argv))
 		exit(EXIT_FAILURE);
+	data.envp=envp;
 	ft_store_commands(argc, argv, &data);
 	ft_store_filenames(argc, argv, &data);
-	ft_validate_commands(&data,envp);
-	ft_printf("arguments are valid\n");
+	ft_validate_commands(&data);
+	ft_validate_filenames(&data);
+	ft_process(&data);
+	ft_printf("Evrything good\n");
+	ft_exit_and_free(&data,NULL,NULL);
+	return(0);
 }

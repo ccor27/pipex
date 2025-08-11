@@ -15,13 +15,14 @@
 /**
  * Function to free memory and exit the program
  */
-void	ft_exit_and_free(t_data *data, char **paths)
+void	ft_exit_and_free(t_data *data, char **paths, char *message)
 {
 	int i;
 	int j;
 
 	free(data->filenames[0]);
 	free(data->filenames[1]);
+	free(data->filenames);
 	i = 0;
 	while(data->commands[i])
 	{
@@ -37,6 +38,8 @@ void	ft_exit_and_free(t_data *data, char **paths)
 	free(data->commands);
 	if(paths)
 		ft_free_paths(paths);
+	if(message)
+		ft_printf("%s",message);
 	exit(EXIT_FAILURE);
 }
 
@@ -55,9 +58,3 @@ void	ft_free_paths(char **paths)
 	free(paths);
 }
 
-/**
- * You only need to validate the command name,
- * which is the first argument of each command (data->commands[i][0]).
- *  The rest of the arguments (-l, -a, etc.) are handled by the command itself
- * and don't affect whether the command can be found in the PATH.
- */
