@@ -33,21 +33,20 @@ char	*ft_get_path(char **envp)
 /**
  * Principal function to validate the commands
  */
-int	ft_validate_commands(t_data *data)
+void	ft_validate_commands(t_data *data)
 {
 	char	*path;
 	char	**paths;
 
 	path = ft_get_path(data->envp);
 	if (!path)
-		ft_exit_and_free(data, NULL, "Error, getting the path\n");
+		ft_msg_exit(data, NULL, "Error: getting the paths", 1);
 	paths = ft_split(path, ':');
 	if (!paths)
-		ft_exit_and_free(data, NULL, "Error, spliting the paths\n");
+		ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
 	if (!ft_command_validation_aux(data, paths))
-		ft_exit_and_free(data, paths, "Error, commands no valid\n");
+		ft_msg_exit(data, NULL, "Error: there are  commands no valid", 1);
 	ft_free_paths(paths);
-	return (1);
 }
 
 /**
@@ -109,7 +108,7 @@ char	*ft_get_full_path(char *command, char **paths)
 void	ft_validate_filenames(t_data *data)
 {
 	if (access(data->filenames[0], F_OK | R_OK) != 0)
-		ft_exit_and_free(data, NULL, "Error,filename either exist or not has the read permissions\n");
+		ft_perror_exit(data, NULL, data->filenames[0], 1);
 	if (access(data->filenames[1], W_OK) != 0)
-		ft_exit_and_free(data, NULL, "Error,filename not has the write permission\n");
+		ft_perror_exit(data, NULL, data->filenames[1], 1);
 }

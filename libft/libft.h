@@ -12,11 +12,11 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include <limits.h>
+# include <stdarg.h>
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdarg.h>
-# include <limits.h>
 
 typedef struct s_list
 {
@@ -70,16 +70,16 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 char				*ft_utoa(unsigned int n);
 char				*ft_itoa_base(unsigned long n, int base);
-//functions for printf
-int	ft_is_valid_specifier(char c);
-int	ft_scan(char specifier, va_list args);
-int	ft_process_string(char *ptr, va_list args);
-int	ft_handle_int(int num);
-int	ft_handle_unsigned_int(unsigned int num);
-int	ft_handle_hexadecimal(unsigned int num, char c);
-int	ft_handle_percentage(void);
-int	ft_handle_string(char *string);
-int	ft_handle_character(char c);
-int	ft_handle_pointer(void *ptr);
-int	ft_printf(const char *string, ...);
+// functions for printf
+int					ft_is_valid_specifier(char c);
+int					ft_scan(char specifier, va_list args);
+int					ft_process_string(char *ptr, va_list args);
+int					ft_handle_int(int num);
+int					ft_handle_unsigned_int(unsigned int num);
+int					ft_handle_hexadecimal(unsigned int num, char c);
+int					ft_handle_percentage(void);
+int					ft_handle_string(char *string);
+int					ft_handle_character(char c);
+int					ft_handle_pointer(void *ptr);
+int					ft_printf(const char *string, ...);
 #endif

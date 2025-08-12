@@ -12,22 +12,33 @@
 
 #include "pipex.h"
 
+/**
+ * Function to initialize the struct
+ */
+static void	ft_initialize_data(t_data *data, char **envp)
+{
+	data->commands = NULL;
+	data->filenames = NULL;
+	data->envp = envp;
+}
 
+/**
+ * Main function
+ */
 int	main(int argc, char **argv, char **envp)
 {
-	t_data data;
+	t_data	data;
 
+	ft_initialize_data(&data, envp);
 	if (argc < 5)
-		exit(EXIT_FAILURE);
+		ft_msg_exit(&data, NULL, "Usage: ./pipex file1 cmd1 cmd2 file2", 1);
 	if (!ft_are_arguments_valid(argv))
-		exit(EXIT_FAILURE);
-	data.envp=envp;
+		ft_msg_exit(&data, NULL, "Error: arguments no valid", 1);
 	ft_store_commands(argc, argv, &data);
 	ft_store_filenames(argc, argv, &data);
 	ft_validate_commands(&data);
 	ft_validate_filenames(&data);
 	ft_process(&data);
-	ft_printf("Evrything good\n");
-	ft_exit_and_free(&data,NULL,NULL);
-	return(0);
+	ft_free_memory(&data, NULL);
+	return (0);
 }

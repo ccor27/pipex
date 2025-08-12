@@ -56,7 +56,7 @@ void	ft_store_commands(int arg_size, char **arguments, t_data *data)
 
 	data->commands = malloc(sizeof(char **) * (arg_size - 2));
 	if (!data->commands)
-		exit(EXIT_FAILURE);
+		ft_msg_exit(data, NULL, "Error: reserving memory for commands", 1);
 	i = 2;
 	j = 0;
 	while (i < arg_size - 1)
@@ -67,14 +67,15 @@ void	ft_store_commands(int arg_size, char **arguments, t_data *data)
 	}
 	data->commands[j] = NULL;
 }
+
 /**
  * Function to store the filenames into a char array
  */
 void	ft_store_filenames(int arg_size, char **arguments, t_data *data)
 {
-	data->filenames = malloc(sizeof(char *)*(3));
-	if(!data->filenames)
-		exit(EXIT_FAILURE);
+	data->filenames = malloc(sizeof(char *) * (3));
+	if (!data->filenames)
+		ft_msg_exit(data, NULL, "Error: reserving memory for filenames", 1);
 	data->filenames[0] = ft_strdup(arguments[1]);
 	data->filenames[1] = ft_strdup(arguments[arg_size - 1]);
 }
