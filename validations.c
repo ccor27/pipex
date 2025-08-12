@@ -45,7 +45,7 @@ void	ft_validate_commands(t_data *data)
 	if (!paths)
 		ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
 	if (!ft_command_validation_aux(data, paths))
-		ft_msg_exit(data, NULL, "Error: there are  commands no valid", 1);
+		ft_msg_exit(data, paths, "Error: there are  commands no valid", 1);
 	ft_free_paths(paths);
 }
 
