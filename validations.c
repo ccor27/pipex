@@ -44,15 +44,14 @@ void	ft_validate_commands(t_data *data)
 	paths = ft_split(path, ':');
 	if (!paths)
 		ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
-	if (!ft_command_validation_aux(data, paths))
-		ft_msg_exit(data, paths, "Error: there are  commands no valid", 1);
+	ft_command_validation_aux(data, paths);
 	ft_free_paths(paths);
 }
 
 /**
  * Auxiliary function that validate the commands
  */
-int	ft_command_validation_aux(t_data *data, char **paths)
+void	ft_command_validation_aux(t_data *data, char **paths)
 {
 	int		i;
 	char	*full_path;
@@ -60,22 +59,17 @@ int	ft_command_validation_aux(t_data *data, char **paths)
 	i = 0;
 	while (data->commands[i])
 	{
-		if (data->commands[i][0][0] == '/')
-		{
-			if (access(data->commands[i][0], X_OK) != 0)
-				return (0);
-		}
-		else
+		if (data->commands[i][0][0] != '/')
 		{
 			full_path = ft_get_full_path(data->commands[i][0], paths);
-			if (!full_path)
-				return (0);
-			free(data->commands[i][0]);
-			data->commands[i][0] = full_path;
+			if (full_path)
+			{
+				free(data->commands[i][0]);
+				data->commands[i][0] = full_path;
+			}
 		}
 		i++;
 	}
-	return (1);
 }
 
 /**
@@ -102,13 +96,3 @@ char	*ft_get_full_path(char *command, char **paths)
 	return (NULL);
 }
 
-/**
- * Function to validate the filenames
- */
-void	ft_validate_filenames(t_data *data)
-{
-	if (access(data->filenames[0], F_OK | R_OK) != 0)
-		ft_perror_exit(data, NULL, data->filenames[0], 1);
-	if (access(data->filenames[1], W_OK) != 0)
-		ft_perror_exit(data, NULL, data->filenames[1], 1);
-}

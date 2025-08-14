@@ -28,6 +28,7 @@ static void	ft_initialize_data(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	int exit_code;
 
 	ft_initialize_data(&data, envp);
 	if (argc < 5)
@@ -37,8 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_store_commands(argc, argv, &data);
 	ft_store_filenames(argc, argv, &data);
 	ft_validate_commands(&data);
-	ft_validate_filenames(&data);
-	ft_process(&data);
+	exit_code = ft_process(&data);
 	ft_free_memory(&data, NULL);
-	return (0);
+	return (exit_code);
 }

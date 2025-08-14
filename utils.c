@@ -63,11 +63,20 @@ void	ft_free_paths(char **paths)
  * Function to free memory and exit using perror
  * in case of error
  */
-void	ft_perror_exit(t_data *data, char **paths, const char *prefix,
+void	ft_perror_exit(t_data *data, char **paths, char *prefix,
 		int exit_code)
 {
 	if (prefix)
-		perror(prefix);
+	{
+		if(exit_code == 127)
+		{
+		ft_putstr_fd(prefix,2);
+		ft_putstr_fd(": command not found",2);
+		ft_putstr_fd("\n",2);
+		}
+		else
+			perror(prefix);
+	}
 	ft_free_memory(data, paths);
 	exit(exit_code);
 }

@@ -35,7 +35,7 @@ void	ft_execute_child(t_data *data, int pipe_fd[], char child, int fd)
 		close(fd);
 		close(pipe_fd[0]);
 		if (execve(data->commands[1][0], data->commands[1], data->envp) == -1)
-			ft_handle_execve_error(data, data->commands[1][1]);
+			ft_handle_execve_error(data, data->commands[1][0]);
 	}
 }
 
@@ -43,43 +43,56 @@ void	ft_execute_child(t_data *data, int pipe_fd[], char child, int fd)
  *Auxiliary function to make the process of fork, close pipe and wait
  for children are done
  */
-void	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
-		int outfile_fd)
+int	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd, int outfile_fd)
 {
 	pid_t	p1;
 	pid_t	p2;
+	int		status;
 
 	pipe(pipe_fd);
 	p1 = fork();
 	if (p1 < 0)
 		ft_perror_exit(data, NULL, "fork (1)", 1);
 	if (p1 == 0)
+	{
+		close(outfile_fd);
 		ft_execute_child(data, pipe_fd, '1', infile_fd);
+	}
 	p2 = fork();
 	if (p2 < 0)
 		ft_perror_exit(data, NULL, "fork (2)", 1);
 	if (p2 == 0)
+	{
+		close(infile_fd);
 		ft_execute_child(data, pipe_fd, '2', outfile_fd);
+	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	waitpid(p1, NULL, 0);
-	waitpid(p2, NULL, 0);
+	return (waitpid(p1, NULL, 0), waitpid(p2, &status, 0),
+		((status >> 8) & 0xFF));
 }
 
 /**
  * Principal function to make the process of fork and execve
  */
-void	ft_process(t_data *data)
+int	ft_process(t_data *data)
 {
 	int	pipe_fd[2];
 	int	infile_fd;
 	int	outfile_fd;
+	int	status;
 
 	infile_fd = open(data->filenames[0], O_RDONLY);
-	outfile_fd = open(data->filenames[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (infile_fd < 0)
 		ft_perror_exit(data, NULL, data->filenames[0], 1);
+	outfile_fd = open(data->filenames[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd < 0)
+	{
+		close(infile_fd);
 		ft_perror_exit(data, NULL, data->filenames[1], 1);
-	ft_process_aux(pipe_fd, data, infile_fd, outfile_fd);
+	}
+	status = ft_process_aux(pipe_fd, data, infile_fd, outfile_fd);
+	close(infile_fd);
+	close(outfile_fd);
+	return (status);
 }

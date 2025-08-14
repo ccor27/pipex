@@ -3,6 +3,7 @@ NAME= pipex
 LIBFT= libft/libft.a
 AR= ar rcs
 #valgrind --leak-check=full --show-leak-kinds=all
+#valgrind --track-fds=yes 
 
 #project files
 SRC= arg_validation.c validations.c pipex.c utils.c process.c
