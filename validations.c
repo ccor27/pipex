@@ -39,13 +39,16 @@ void	ft_validate_commands(t_data *data)
 	char	**paths;
 
 	path = ft_get_path(data->envp);
-	if (!path)
-		ft_msg_exit(data, NULL, "Error: getting the paths", 1);
-	paths = ft_split(path, ':');
-	if (!paths)
-		ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
+	paths = NULL;
+	if (path)
+	{
+		paths = ft_split(path, ':');
+		if (!paths)
+			ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
+	}
 	ft_command_validation_aux(data, paths);
-	ft_free_paths(paths);
+	if (paths)
+		ft_free_paths(paths);
 }
 
 /**
@@ -57,19 +60,26 @@ void	ft_command_validation_aux(t_data *data, char **paths)
 	char	*full_path;
 
 	i = 0;
+	data->cmd_paths = malloc(sizeof(char *) * (data->num_commands + 1));
+	if (!data->cmd_paths)
+		ft_msg_exit(data, NULL, "Error: reserving memory for commands path", 1);
 	while (data->commands[i])
 	{
-		if (data->commands[i][0][0] != '/')
+		if (data->commands[i][0][0] == '/')
+			data->cmd_paths[i] = ft_strdup(data->commands[i][0]);
+		else if (paths)
 		{
 			full_path = ft_get_full_path(data->commands[i][0], paths);
 			if (full_path)
-			{
-				free(data->commands[i][0]);
-				data->commands[i][0] = full_path;
-			}
+				data->cmd_paths[i] = full_path;
+			else
+				data->cmd_paths[i] = NULL;
 		}
+		else
+			data->cmd_paths[i] = NULL;
 		i++;
 	}
+	data->cmd_paths[i] = NULL;
 }
 
 /**
@@ -95,4 +105,3 @@ char	*ft_get_full_path(char *command, char **paths)
 	}
 	return (NULL);
 }
-

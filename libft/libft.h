@@ -82,4 +82,5 @@ int					ft_handle_string(char *string);
 int					ft_handle_character(char c);
 int					ft_handle_pointer(void *ptr);
 int					ft_printf(const char *string, ...);
+char	**ft_split_quote(const char *s, char c, int i, int j);
 #endif

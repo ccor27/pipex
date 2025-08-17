@@ -61,11 +61,12 @@ void	ft_store_commands(int arg_size, char **arguments, t_data *data)
 	j = 0;
 	while (i < arg_size - 1)
 	{
-		data->commands[j] = ft_split(arguments[i], ' ');
+		data->commands[j] = ft_split_quote(arguments[i], ' ', 0, 0);
 		i++;
 		j++;
 	}
 	data->commands[j] = NULL;
+	data->num_commands = arg_size - 2;
 }
 
 /**
@@ -78,4 +79,5 @@ void	ft_store_filenames(int arg_size, char **arguments, t_data *data)
 		ft_msg_exit(data, NULL, "Error: reserving memory for filenames", 1);
 	data->filenames[0] = ft_strdup(arguments[1]);
 	data->filenames[1] = ft_strdup(arguments[arg_size - 1]);
+	data->filenames[2] = NULL;
 }

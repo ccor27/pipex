@@ -18,6 +18,7 @@
 static void	ft_initialize_data(t_data *data, char **envp)
 {
 	data->commands = NULL;
+	data->cmd_paths=NULL;
 	data->filenames = NULL;
 	data->envp = envp;
 }
@@ -28,7 +29,7 @@ static void	ft_initialize_data(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	int exit_code;
+	int		exit_code;
 
 	ft_initialize_data(&data, envp);
 	if (argc < 5)

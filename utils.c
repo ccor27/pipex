@@ -40,6 +40,18 @@ void	ft_free_memory(t_data *data, char **paths)
 	}
 	if (paths)
 		ft_free_paths(paths);
+	if(data->cmd_paths)
+		ft_free_cmd_paths(data);
+}
+
+void ft_free_cmd_paths(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->cmd_paths[i])
+		free(data->cmd_paths[i++]);
+	free(data->cmd_paths);
 }
 
 /**
@@ -57,54 +69,4 @@ void	ft_free_paths(char **paths)
 		i++;
 	}
 	free(paths);
-}
-
-/**
- * Function to free memory and exit using perror
- * in case of error
- */
-void	ft_perror_exit(t_data *data, char **paths, char *prefix,
-		int exit_code)
-{
-	if (prefix)
-	{
-		if(exit_code == 127)
-		{
-		ft_putstr_fd(prefix,2);
-		ft_putstr_fd(": command not found",2);
-		ft_putstr_fd("\n",2);
-		}
-		else
-			perror(prefix);
-	}
-	ft_free_memory(data, paths);
-	exit(exit_code);
-}
-
-/**
- * Function to free memory and exit showing a personalized message
- * in case of error
- */
-void	ft_msg_exit(t_data *data, char **paths, char *msg, int exit_code)
-{
-	if (msg)
-	{
-		ft_putstr_fd(msg, 2);
-		ft_putchar_fd('\n', 2);
-	}
-	ft_free_memory(data, paths);
-	exit(exit_code);
-}
-
-/**
- * Function to hanle error during the execve
- */
-void	ft_handle_execve_error(t_data *data, char *cmd)
-{
-	if (errno == ENOENT)
-		ft_perror_exit(data, NULL, cmd, 127);
-	else if (errno == EACCES)
-		ft_perror_exit(data, NULL, cmd, 126);
-	else
-		ft_perror_exit(data, NULL, cmd, 1);
 }

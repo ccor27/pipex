@@ -22,6 +22,8 @@
 typedef struct s_data
 {
 	char	***commands;
+	char	**cmd_paths;
+	int		num_commands;
 	char	**filenames;
 	char	**envp;
 }			t_data;
@@ -32,20 +34,21 @@ void		ft_store_commands(int arg_size, char **arguments, t_data *data);
 void		ft_store_filenames(int arg_size, char **arguments, t_data *data);
 // utils.c
 void		ft_free_memory(t_data *data, char **paths);
+void		ft_free_cmd_paths(t_data *data);
 void		ft_free_paths(char **paths);
-void		ft_msg_exit(t_data *data, char **paths, char *msg, int exit_code);
-void		ft_perror_exit(t_data *data, char **paths, char *prefix,
-				int exit_code);
-void		ft_handle_execve_error(t_data *data, char *cmd);
 // validations.c
 char		*ft_get_path(char **envp);
 void		ft_validate_commands(t_data *data);
-void			ft_command_validation_aux(t_data *data, char **paths);
 char		*ft_get_full_path(char *command, char **paths);
 // process.c
 void		ft_execute_child(t_data *data, int pipe_fd[], char child, int fd);
-int		ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
+int			ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
 				int outfile_fd);
-int		ft_process(t_data *data);
-
+int			ft_process(t_data *data);
+// error_handler.c
+void		ft_msg_exit(t_data *data, char **paths, char *msg, int exit_code);
+void	ft_perror_exit(t_data *data, char **paths, char *prefix, int exit_code);
+void		ft_handle_execve_error(t_data *data, char **paths,char *cmd, int code);
+void		ft_command_validation_aux(t_data *data, char **paths);
+void	ft_command_not_found_exit(t_data *data, char **paths,char *cmd);
 #endif
