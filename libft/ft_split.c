@@ -80,7 +80,6 @@ static char	**ft_fill_up_matrix(const char *s, char c, char **matrix)
 	return (matrix);
 }
 
-
 static char	**ft_handle_special_cases(void)
 {
 	char	**matrix;

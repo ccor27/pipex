@@ -40,11 +40,11 @@ void	ft_free_memory(t_data *data, char **paths)
 	}
 	if (paths)
 		ft_free_paths(paths);
-	if(data->cmd_paths)
+	if (data->cmd_paths)
 		ft_free_cmd_paths(data);
 }
 
-void ft_free_cmd_paths(t_data *data)
+void	ft_free_cmd_paths(t_data *data)
 {
 	int	i;
 

@@ -18,7 +18,7 @@
 static void	ft_initialize_data(t_data *data, char **envp)
 {
 	data->commands = NULL;
-	data->cmd_paths=NULL;
+	data->cmd_paths = NULL;
 	data->filenames = NULL;
 	data->envp = envp;
 }

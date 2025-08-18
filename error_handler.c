@@ -29,13 +29,16 @@ void	ft_perror_exit(t_data *data, char **paths, char *prefix, int exit_code)
  */
 void	ft_command_not_found_exit(t_data *data, char **paths, char *cmd)
 {
-		char *msg;
+	char	*msg;
+	char	*full_msg;
 
 	if (cmd)
 	{
 		msg = ft_strjoin(cmd, ": command not found\n");
-		write(2, msg, ft_strlen(msg));
+		full_msg = ft_strjoin("pipex: ", msg);
+		write(2, full_msg, ft_strlen(full_msg));
 		free(msg);
+		free(full_msg);
 	}
 	ft_free_memory(data, paths);
 	exit(127);
@@ -53,6 +56,7 @@ void	ft_handle_execve_error(t_data *data, char **paths, char *cmd, int code)
 	else
 		ft_perror_exit(data, paths, cmd, 1);
 }
+
 /**
  * Function to free memory and exit showing a personalized message
  * in case of error
