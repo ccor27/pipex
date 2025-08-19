@@ -108,3 +108,4 @@ int	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd, int outfile_fd)
 	waitpid(p2, &status, 0);
 	return ((status >> 8) & 0xFF);
 }
+
