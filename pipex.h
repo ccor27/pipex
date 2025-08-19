@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
+/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-12 17:26:48 by crosorio          #+#    #+#             */
-/*   Updated: 2025-08-12 17:26:48 by crosorio         ###   ########.fr       */
+/*   Created: 2025/08/12 17:26:48 by crosorio          #+#    #+#             */
+/*   Updated: 2025/08/13 19:36:57 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_data
 {
+	char	**command_paths;
 	char	***commands;
 	char	**filenames;
 	char	**envp;
@@ -40,13 +41,13 @@ void		ft_handle_execve_error(t_data *data, char *cmd);
 // validations.c
 char		*ft_get_path(char **envp);
 void		ft_validate_commands(t_data *data);
-int			ft_command_validation_aux(t_data *data, char **paths);
+void		ft_command_validation_aux(t_data *data, char **paths);
 void		ft_validate_filenames(t_data *data);
 char		*ft_get_full_path(char *command, char **paths);
 // process.c
 void		ft_execute_child(t_data *data, int pipe_fd[], char child, int fd);
-void		ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
+int			ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
 				int outfile_fd);
-void		ft_process(t_data *data);
+int			ft_process(t_data *data);
 
 #endif

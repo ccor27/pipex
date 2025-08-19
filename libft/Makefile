@@ -8,7 +8,8 @@ SRC = ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c
 	  ft_toupper.c ft_memmove.c ft_atoi.c ft_memchr.c ft_memchr.c ft_memcmp.c ft_substr.c \
 	  ft_strjoin.c ft_strtrim.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
 	  ft_putendl_fd.c ft_putnbr_fd.c ft_split.c ft_itoa.c ft_utoa.c ft_itoa_base.c \
-	  ft_convert_int.c ft_convert_string.c ft_printf.c utils.c
+	  ft_convert_int.c ft_convert_string.c ft_printf.c utils.c utils.c get_next_line.c \
+	  utils.c get_next_line_utils.c
 
 BONUS_SRC = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c \
             ft_lstadd_back_bonus.c ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c \

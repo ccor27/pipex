@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_validation.c                              :+:      :+:    :+:   */
+/*   validations.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
+/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-09 16:23:18 by crosorio          #+#    #+#             */
-/*   Updated: 2025-08-09 16:23:18 by crosorio         ###   ########.fr       */
+/*   Created: 2025/08/09 16:23:18 by crosorio          #+#    #+#             */
+/*   Updated: 2025/08/13 21:17:41 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*ft_get_path(char **envp)
 
 /**
  * Principal function to validate the commands
+ * 	if (!ft_command_validation_aux(data, paths))
+ft_msg_exit(data, paths, "Error: there are  commands no valid", 1);
  */
 void	ft_validate_commands(t_data *data)
 {
@@ -44,38 +46,52 @@ void	ft_validate_commands(t_data *data)
 	paths = ft_split(path, ':');
 	if (!paths)
 		ft_msg_exit(data, NULL, "Error: spliting the paths", 1);
-	if (!ft_command_validation_aux(data, paths))
-		ft_msg_exit(data, paths, "Error: there are  commands no valid", 1);
+	
+	ft_command_validation_aux(data, paths);
+	//ft_printf("Luego de guardar los paths de los comandos\n");
 	ft_free_paths(paths);
 }
+
+// void static ft_print_commands(t_data *data)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while(data->commands[i])
+// 	{
+// 		j = 0;
+// 		while (data->commands[i][j])
+// 		{
+// 			ft_printf("%s\n",data->commands[i][j]);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 /**
  * Auxiliary function that validate the commands
  */
-int	ft_command_validation_aux(t_data *data, char **paths)
+void	ft_command_validation_aux(t_data *data, char **paths)
 {
 	int		i;
 	char	*full_path;
 
 	i = 0;
+	//ft_print_commands(data);
 	while (data->commands[i])
 	{
-		if (data->commands[i][0][0] == '/')
-		{
-			if (access(data->commands[i][0], X_OK) != 0)
-				return (0);
-		}
-		else
-		{
-			full_path = ft_get_full_path(data->commands[i][0], paths);
-			if (!full_path)
-				return (0);
-			free(data->commands[i][0]);
-			data->commands[i][0] = full_path;
-		}
+		// ft_printf("antes de llamar ft_get_full_path\n");
+		// ft_printf("valor de command: %s\n",data->commands[i][0]);
+		full_path = ft_get_full_path(data->commands[i][0], paths);
+		//ft_printf("despues de llamar ft_get_full_path\n");
+		if (!full_path)
+			return;
+		data->command_paths[i] = full_path;
 		i++;
 	}
-	return (1);
 }
 
 /**
@@ -89,16 +105,20 @@ char	*ft_get_full_path(char *command, char **paths)
 	char	*tmp;
 
 	i = 0;
+	//ft_printf("antes del while en get_full_path\n");
 	while (paths[i])
 	{
+		//ft_printf("dentro del while en get_full_path (antes del joins\n");
 		tmp = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(tmp, command);
+		//ft_printf("dentro del while en get_full_path (despues del joins\n");
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
 		i++;
 	}
+	//ft_printf("despues del while en get_full_path\n");
 	return (NULL);
 }
 
@@ -109,6 +129,4 @@ void	ft_validate_filenames(t_data *data)
 {
 	if (access(data->filenames[0], F_OK | R_OK) != 0)
 		ft_perror_exit(data, NULL, data->filenames[0], 1);
-	if (access(data->filenames[1], W_OK) != 0)
-		ft_perror_exit(data, NULL, data->filenames[1], 1);
 }

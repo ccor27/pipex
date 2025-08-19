@@ -6,12 +6,17 @@
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:46 by crosorio          #+#    #+#             */
-/*   Updated: 2025/05/16 13:25:11 by crosorio         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:19:04 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 # include <limits.h>
 # include <stdarg.h>
 # include <stdint.h>
@@ -82,4 +87,17 @@ int					ft_handle_string(char *string);
 int					ft_handle_character(char c);
 int					ft_handle_pointer(void *ptr);
 int					ft_printf(const char *string, ...);
+// get_next_line_utils.c
+char				*ft_strdup(const char *s);
+size_t				ft_strlen(const char *s);
+char				*ft_strchr(const char *s, int c);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_strjoin_gnl(char const *s1, char const *s2, size_t i,
+						size_t j);
+// get_next_line.c
+char				*ft_get_line(char *stash);
+void				ft_update_stash(char **stash);
+int					ft_read(int fd, char **stash, char **buffer);
+void				*free_two(char **ptr1, char **ptr2);
+char				*get_next_line(int fd);
 #endif

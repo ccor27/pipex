@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
+/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-09 12:50:34 by crosorio          #+#    #+#             */
-/*   Updated: 2025-08-09 12:50:34 by crosorio         ###   ########.fr       */
+/*   Created: 2025/08/09 12:50:34 by crosorio          #+#    #+#             */
+/*   Updated: 2025/08/13 21:20:34 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ void	ft_free_paths(char **paths)
 void	ft_perror_exit(t_data *data, char **paths, const char *prefix,
 		int exit_code)
 {
+	//ft_printf("entro en ft_perror_exit\n");
 	if (prefix)
 		perror(prefix);
+	//ft_printf("depues de imprimir prefix en ft_perror_exit\n");
 	ft_free_memory(data, paths);
 	exit(exit_code);
 }

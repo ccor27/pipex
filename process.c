@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
+/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-11 12:31:36 by crosorio          #+#    #+#             */
-/*   Updated: 2025-08-11 12:31:36 by crosorio         ###   ########.fr       */
+/*   Created: 2025/08/11 12:31:36 by crosorio          #+#    #+#             */
+/*   Updated: 2025/08/13 21:18:59 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,31 @@ void	ft_execute_child(t_data *data, int pipe_fd[], char child, int fd)
 {
 	if (child == '1')
 	{
+		//ft_printf("Antes de dup2 (1)\n");
 		close(pipe_fd[0]);
 		if (dup2(fd, STDIN_FILENO) < 0 || dup2(pipe_fd[1], STDOUT_FILENO) < 0)
 			ft_perror_exit(data, NULL, "dup (1)", 1);
+		//ft_printf("despues de dup2 (1)\n");
 		close(fd);
 		close(pipe_fd[1]);
-		if (execve(data->commands[0][0], data->commands[0], data->envp) == -1)
+		//ft_printf("Antes de execve (1)\n");
+		if (execve(data->command_paths[0], data->commands[0], data->envp) == -1)
 			ft_handle_execve_error(data, data->commands[0][0]);
+		//ft_printf("Despues de execve (1)\n");
 	}
 	else
 	{
 		close(pipe_fd[1]);
+		//ft_printf("Antes de dup2 (2)\n");
 		if (dup2(pipe_fd[0], STDIN_FILENO) < 0 || dup2(fd, STDOUT_FILENO) < 0)
 			ft_perror_exit(data, NULL, "dup (2)", 1);
+		//ft_printf("Despues de dup2 (2)\n");
 		close(fd);
 		close(pipe_fd[0]);
-		if (execve(data->commands[1][0], data->commands[1], data->envp) == -1)
-			ft_handle_execve_error(data, data->commands[1][1]);
+		//ft_printf("Antes de execve (2)\n");
+		if (execve(data->command_paths[1], data->commands[1], data->envp) == -1)
+			ft_handle_execve_error(data, data->commands[1][0]);
+		//ft_printf("Despues de execve (2)\n");
 	}
 }
 
@@ -43,11 +51,11 @@ void	ft_execute_child(t_data *data, int pipe_fd[], char child, int fd)
  *Auxiliary function to make the process of fork, close pipe and wait
  for children are done
  */
-void	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
-		int outfile_fd)
+int	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd, int outfile_fd)
 {
 	pid_t	p1;
 	pid_t	p2;
+	int		status;
 
 	pipe(pipe_fd);
 	p1 = fork();
@@ -63,13 +71,14 @@ void	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	waitpid(p1, NULL, 0);
-	waitpid(p2, NULL, 0);
+	waitpid(p2, &status, 0);
+	return ((status >> 8) & 0xFF);
 }
 
 /**
  * Principal function to make the process of fork and execve
  */
-void	ft_process(t_data *data)
+int	ft_process(t_data *data)
 {
 	int	pipe_fd[2];
 	int	infile_fd;
@@ -81,5 +90,5 @@ void	ft_process(t_data *data)
 		ft_perror_exit(data, NULL, data->filenames[0], 1);
 	if (outfile_fd < 0)
 		ft_perror_exit(data, NULL, data->filenames[1], 1);
-	ft_process_aux(pipe_fd, data, infile_fd, outfile_fd);
+	return (ft_process_aux(pipe_fd, data, infile_fd, outfile_fd));
 }
