@@ -6,7 +6,7 @@
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 12:50:34 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/13 21:20:34 by crosorio         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:33:44 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ void	ft_free_memory(t_data *data, char **paths)
 	}
 	if (paths)
 		ft_free_paths(paths);
+	if (data->cmd_paths)
+		ft_free_cmd_paths(data);
+}
+
+void	ft_free_cmd_paths(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->cmd_paths[i])
+		free(data->cmd_paths[i++]);
+	free(data->cmd_paths);
 }
 
 /**
@@ -57,47 +69,4 @@ void	ft_free_paths(char **paths)
 		i++;
 	}
 	free(paths);
-}
-
-/**
- * Function to free memory and exit using perror
- * in case of error
- */
-void	ft_perror_exit(t_data *data, char **paths, const char *prefix,
-		int exit_code)
-{
-	//ft_printf("entro en ft_perror_exit\n");
-	if (prefix)
-		perror(prefix);
-	//ft_printf("depues de imprimir prefix en ft_perror_exit\n");
-	ft_free_memory(data, paths);
-	exit(exit_code);
-}
-
-/**
- * Function to free memory and exit showing a personalized message
- * in case of error
- */
-void	ft_msg_exit(t_data *data, char **paths, char *msg, int exit_code)
-{
-	if (msg)
-	{
-		ft_putstr_fd(msg, 2);
-		ft_putchar_fd('\n', 2);
-	}
-	ft_free_memory(data, paths);
-	exit(exit_code);
-}
-
-/**
- * Function to hanle error during the execve
- */
-void	ft_handle_execve_error(t_data *data, char *cmd)
-{
-	if (errno == ENOENT)
-		ft_perror_exit(data, NULL, cmd, 127);
-	else if (errno == EACCES)
-		ft_perror_exit(data, NULL, cmd, 126);
-	else
-		ft_perror_exit(data, NULL, cmd, 1);
 }

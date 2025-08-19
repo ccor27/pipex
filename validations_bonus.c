@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validations.c                                      :+:      :+:    :+:   */
+/*   validations_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 16:23:18 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/19 15:32:34 by crosorio         ###   ########.fr       */
+/*   Created: 2025-08-19 08:51:40 by crosorio          #+#    #+#             */
+/*   Updated: 2025-08-19 08:51:40 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 /**
  * Function to get the paths from the
@@ -32,8 +32,6 @@ char	*ft_get_path(char **envp)
 
 /**
  * Principal function to validate the commands
- * 	if (!ft_command_validation_aux(data, paths))
-ft_msg_exit(data, paths, "Error: there are  commands no valid", 1);
  */
 void	ft_validate_commands(t_data *data)
 {
@@ -95,20 +93,15 @@ char	*ft_get_full_path(char *command, char **paths)
 	char	*tmp;
 
 	i = 0;
-	//ft_printf("antes del while en get_full_path\n");
 	while (paths[i])
 	{
-		//ft_printf("dentro del while en get_full_path (antes del joins\n");
 		tmp = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(tmp, command);
-		//ft_printf("dentro del while en get_full_path (despues del joins\n");
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
 		i++;
 	}
-	//ft_printf("despues del while en get_full_path\n");
 	return (NULL);
 }
-

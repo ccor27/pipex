@@ -6,7 +6,7 @@
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 17:55:46 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/13 16:19:04 by crosorio         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:44:50 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void				ft_update_stash(char **stash);
 int					ft_read(int fd, char **stash, char **buffer);
 void				*free_two(char **ptr1, char **ptr2);
 char				*get_next_line(int fd);
+char				**ft_split_quote(const char *s, char c, int i, int j);
 #endif

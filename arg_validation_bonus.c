@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arg_validation.c                                   :+:      :+:    :+:   */
+/*   arg_validation_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 09:22:31 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/13 21:08:24 by crosorio         ###   ########.fr       */
+/*   Created: 2025-08-18 15:50:39 by crosorio          #+#    #+#             */
+/*   Updated: 2025-08-18 15:50:39 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 /**
  * Function to validate if a string is empty or blank
@@ -57,9 +57,6 @@ void	ft_store_commands(int arg_size, char **arguments, t_data *data)
 	data->commands = malloc(sizeof(char **) * (arg_size - 2));
 	if (!data->commands)
 		ft_msg_exit(data, NULL, "Error: reserving memory for commands", 1);
-	data->command_paths = malloc(sizeof(char *) * (arg_size -2));
-	if (!data->command_paths)
-		ft_msg_exit(data, NULL, "Error: reserving memory for command paths", 1);
 	i = 2;
 	j = 0;
 	while (i < arg_size - 1)
@@ -81,6 +78,6 @@ void	ft_store_filenames(int arg_size, char **arguments, t_data *data)
 	if (!data->filenames)
 		ft_msg_exit(data, NULL, "Error: reserving memory for filenames", 1);
 	data->filenames[0] = ft_strdup(arguments[1]);
-	data->filenames[1] = ft_strdup(arguments[arg_size - 1]);
+	data->filenames[arg_size - 1] = ft_strdup(arguments[arg_size - 1]);
 	data->filenames[2] = NULL;
 }
