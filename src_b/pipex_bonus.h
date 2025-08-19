@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: crosorio < crosorio@student.42madrid.com>  #+#  +:+       +#+        */
+/*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-18 15:31:39 by crosorio          #+#    #+#             */
-/*   Updated: 2025-08-18 15:31:39 by crosorio         ###   ########.fr       */
+/*   Created: 2025/08/18 15:31:39 by crosorio          #+#    #+#             */
+/*   Updated: 2025/08/19 20:17:15 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_data
 	int		num_commands;
 	char	**filenames;
 	char	**envp;
+	int		infile;
+	int		outfile;
 }			t_data;
 
 //error_handler_bonus.c

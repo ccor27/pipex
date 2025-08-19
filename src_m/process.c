@@ -6,14 +6,13 @@
 /*   By: crosorio <crosorio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:31:36 by crosorio          #+#    #+#             */
-/*   Updated: 2025/08/19 15:41:19 by crosorio         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:51:46 by crosorio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // /**
-// <<<<<<< HEAD
 //  * Function to execute a child process using exceve and dup2
 //  */
 // void	ft_execute_child(t_data *data, int pipe_fd[], char child, int fd)

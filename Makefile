@@ -7,7 +7,7 @@ AR= ar rcs
 #valgrind --track-fds=yes
 
 #project files
-SRC= arg_validation.c validations.c pipex.c utils.c process.c error_handler.c
+SRC= src_m/arg_validation.c src_m/validations.c src_m/pipex.c src_m/utils.c src_m/process.c src_m/error_handler.c
 OBJ_DIR= obj
 OBJ= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
@@ -54,22 +54,22 @@ $(NAME): $(OBJ)
 		$(call LOADING_BAR_COMP)
 		@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 
-$(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)/src_m
 	@$(CC) $(CFLAGS) $(INCLUDES)  -c $< -o $@
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/src_m:
+	@mkdir -p $(OBJ_DIR)/src_m
 
-$(NAME_BONUS): $(OBJ_BONUS)
-		@$(MAKE) -C $(LIBFT_DIR) --silent
-		$(call LOADING_BAR_COMP)
-		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+#$(NAME_BONUS): $(OBJ_BONUS)
+#		@$(MAKE) -C $(LIBFT_DIR) --silent
+#		$(call LOADING_BAR_COMP)
+#		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJ_DIR_BONUS)/%.o : %.c | $(OBJ_DIR_BONUS)
+$(OBJ_DIR_BONUS)/%.o : %.c | $(OBJ_DIR_BONUS)/src_b
 	@$(CC) $(CFLAGS) $(INCLUDES)  -c $< -o $@
 
-$(OBJ_DIR_BONUS):
-	@mkdir -p $(OBJ_DIR_BONUS)
+$(OBJ_DIR_BONUS)/src_b:
+	@mkdir -p $(OBJ_DIR_BONUS)/src_b
 
 clean:
 	@rm -rf $(OBJ_DIR)
