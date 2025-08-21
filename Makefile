@@ -1,6 +1,5 @@
 #Variables
 NAME= pipex
-NAME_BONUS=pipex
 LIBFT= libft/libft.a
 AR= ar rcs
 #valgrind --leak-check=full --show-leak-kinds=all
@@ -60,10 +59,10 @@ $(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)/src_m
 $(OBJ_DIR)/src_m:
 	@mkdir -p $(OBJ_DIR)/src_m
 
-#$(NAME_BONUS): $(OBJ_BONUS)
-#		@$(MAKE) -C $(LIBFT_DIR) --silent
-#		$(call LOADING_BAR_COMP)
-#		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+bonus: $(OBJ_BONUS)
+		@$(MAKE) -C $(LIBFT_DIR) --silent
+		$(call LOADING_BAR_COMP)
+		@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR_BONUS)/%.o : %.c | $(OBJ_DIR_BONUS)/src_b
 	@$(CC) $(CFLAGS) $(INCLUDES)  -c $< -o $@

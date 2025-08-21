@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
 	int exit_code;
-	
+
 	ft_initialize_data(&data,envp);
 	if (argc < 5)
 		ft_msg_exit(&data, NULL, "Usage: ./pipex file1 cmd1 ... cmd2 file2", 1);
@@ -36,4 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_store_commands(argc,argv,&data);
 	ft_store_filenames(argc,argv,&data);
 	ft_validate_commands(&data);
+	exit_code = ft_process(&data);
+	ft_free_memory(&data,NULL);
+	return(exit_code);
 }

@@ -45,4 +45,15 @@ char	*ft_get_path(char **envp);
 void	ft_validate_commands(t_data *data);
 void	ft_command_validation_aux(t_data *data, char **paths);
 char	*ft_get_full_path(char *command, char **paths);
+//process_bonus.c
+int	ft_process(t_data *data);
+void	ft_dup_child(t_data *data, int index, int **pipes);
+void	ft_exe_child(t_data *data, int index);
+void	ft_allocate_pipes_and_pids(t_data *data, int ***pipes, int **pids);
+//utils_bonus.c
+void	ft_wait_child(int *pids, int *status, int n);
+void	ft_close_all_pipes(int **pipes, int n);
+void	ft_free_memory(t_data *data, char **paths);
+void	ft_free_cmd_paths(t_data *data);
+void	ft_free_paths(char **paths);
 #endif
