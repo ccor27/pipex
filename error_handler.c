@@ -19,7 +19,11 @@
 void	ft_perror_exit(t_data *data, char **paths, char *prefix, int exit_code)
 {
 	if (prefix)
+	{
+		if(exit_code == 126)
+			write(2, "pipex: ", 7);
 		perror(prefix);
+	}
 	ft_free_memory(data, paths);
 	exit(exit_code);
 }

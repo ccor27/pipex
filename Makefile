@@ -2,9 +2,7 @@
 NAME= pipex
 LIBFT= libft/libft.a
 AR= ar rcs
-#valgrind --leak-check=full --show-leak-kinds=all
-#valgrind --track-fds=yes
-
+#valgrind -s --tool=memcheck --leak-check=full --show-leak-kinds=all --show-reachable=yes --track-origins=yes --trace-children=yes --track-fds=yes
 #project files
 SRC= arg_validation.c validations.c pipex.c utils.c process.c error_handler.c
 OBJ_DIR= obj

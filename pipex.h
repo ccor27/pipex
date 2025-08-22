@@ -26,6 +26,8 @@ typedef struct s_data
 	int		num_commands;
 	char	**filenames;
 	char	**envp;
+	int		infile;
+	int		outfile;
 }			t_data;
 // arg_validation.c
 int			ft_are_arguments_valid(char **arguments);
@@ -41,9 +43,8 @@ char		*ft_get_path(char **envp);
 void		ft_validate_commands(t_data *data);
 char		*ft_get_full_path(char *command, char **paths);
 // process.c
-void		ft_execute_child(t_data *data, int pipe_fd[], char child, int fd);
-int			ft_process_aux(int pipe_fd[], t_data *data, int infile_fd,
-				int outfile_fd);
+//void		ft_execute_child(t_data *data, int pipe_fd[], char child, int fd);
+//int			ft_process_aux(int pipe_fd[], t_data *data);
 int			ft_process(t_data *data);
 // error_handler.c
 void		ft_msg_exit(t_data *data, char **paths, char *msg, int exit_code);

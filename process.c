@@ -13,9 +13,7 @@
 #include "pipex.h"
 
 /**
- * Principal function to make the process of fork and execve
- */
-int	ft_process(t_data *data)
+ * int	ft_process(t_data *data)
 {
 	int	pipe_fd[2];
 	int	infile_fd;
@@ -40,8 +38,13 @@ int	ft_process(t_data *data)
 	close(outfile_fd);
 	return (status);
 }
+ */
 
-static pid_t	ft_first_child(t_data *data, int pipe_fd[], int infile_fd)
+/**
+ * Principal function to make the process of fork and execve
+ */
+
+ static pid_t	ft_first_child(t_data *data, int pipe_fd[])
 {
 	pid_t	p1;
 
@@ -50,24 +53,25 @@ static pid_t	ft_first_child(t_data *data, int pipe_fd[], int infile_fd)
 		ft_perror_exit(data, NULL, "fork (1)", 1);
 	if (p1 == 0)
 	{
+		data->infile = open(data->filenames[0], O_RDONLY);
+		if (data->infile < 0)
+			ft_perror_exit(data, NULL, data->filenames[0], 126);
 		close(pipe_fd[0]);
-		if (dup2(infile_fd, STDIN_FILENO) < 0 || dup2(pipe_fd[1],
+		if (dup2(data->infile, STDIN_FILENO) < 0 || dup2(pipe_fd[1],
 				STDOUT_FILENO) < 0)
 			ft_perror_exit(data, NULL, "dup (1)", 1);
-		close(infile_fd);
 		close(pipe_fd[1]);
+		close(data->infile);
 		if (data->cmd_paths[0] == NULL)
 			ft_handle_execve_error(data, NULL, data->commands[0][0], ENOENT);
-		else
-		{
-			if (execve(data->cmd_paths[0], data->commands[0], data->envp) == -1)
-				ft_handle_execve_error(data, NULL, data->commands[0][0], errno);
-		}
+		else if (execve(data->cmd_paths[0], data->commands[0], data->envp) ==
+			-1)
+			ft_handle_execve_error(data, NULL, data->commands[0][0], errno);
 	}
 	return (p1);
 }
 
-static pid_t	ft_second_child(t_data *data, int pipe_fd[], int outfile_fd)
+static pid_t	ft_second_child(t_data *data, int pipe_fd[])
 {
 	pid_t	p2;
 
@@ -76,32 +80,35 @@ static pid_t	ft_second_child(t_data *data, int pipe_fd[], int outfile_fd)
 		ft_perror_exit(data, NULL, "fork (2)", 1);
 	if (p2 == 0)
 	{
+		data->outfile = open(data->filenames[1], O_WRONLY | O_CREAT | O_TRUNC,
+				0664);
+		if (data->outfile < 0)
+			ft_perror_exit(data, NULL, data->filenames[1], 126);
 		close(pipe_fd[1]);
-		if (dup2(pipe_fd[0], STDIN_FILENO) < 0 || dup2(outfile_fd,
+		if (dup2(pipe_fd[0], STDIN_FILENO) < 0 || dup2(data->outfile,
 				STDOUT_FILENO) < 0)
 			ft_perror_exit(data, NULL, "dup (2)", 1);
-		close(outfile_fd);
+		close(data->outfile);
 		close(pipe_fd[0]);
 		if (data->cmd_paths[1] == NULL)
 			ft_handle_execve_error(data, NULL, data->commands[1][0], ENOENT);
-		else
-		{
-			if (execve(data->cmd_paths[1], data->commands[1], data->envp) == -1)
-				ft_handle_execve_error(data, NULL, data->commands[1][0], errno);
-		}
+		else if (execve(data->cmd_paths[1], data->commands[1], data->envp) ==
+			-1)
+			ft_handle_execve_error(data, NULL, data->commands[1][0], errno);
 	}
 	return (p2);
 }
 
-int	ft_process_aux(int pipe_fd[], t_data *data, int infile_fd, int outfile_fd)
+int	ft_process(t_data *data)
 {
+	int		pipe_fd[2];
+	int		status;
 	pid_t	p1;
 	pid_t	p2;
-	int		status;
 
 	pipe(pipe_fd);
-	p1 = ft_first_child(data, pipe_fd, infile_fd);
-	p2 = ft_second_child(data, pipe_fd, outfile_fd);
+	p1 = ft_first_child(data, pipe_fd);
+	p2 = ft_second_child(data, pipe_fd);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	waitpid(p1, NULL, 0);
